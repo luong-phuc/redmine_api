@@ -2,7 +2,7 @@
 
 ## Information
 
-API SDK : https://github.com/kbsali/php-redmine-api  
+API SDK : https://github.com/kbsali/php-redmine-api
 Redmine API : https://www.redmine.org/projects/redmine/wiki/rest_api
 
 

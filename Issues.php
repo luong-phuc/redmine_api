@@ -23,7 +23,6 @@ if (isset($argv[2])) {
     $issueId = $argv[2];
 } else {
     $logger->error("Please input issue id.");
-    exit;
 }
 
 $valueUpdate = null;
@@ -31,7 +30,6 @@ if (isset($argv[3])) {
     $valueUpdate = $argv[3];
 } elseif ($status !== VIEW) {
     $logger->error("Please input status id.");
-    exit;
 }
 
 $message = "\nYou're {$status} issue : {$issueId} ";

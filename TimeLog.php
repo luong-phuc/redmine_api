@@ -32,26 +32,22 @@ switch ($status) {
     case ADD:
         if (!isset($argv[2])) {
             $logger->error("Please input Issue Id.");
-            exit;
         }
         $issueId = $argv[2];
         break;
     case DEL:
         if (!isset($argv[2])) {
             $logger->error("Please input Issue Id.");
-            exit;
         }
         $issueId = $argv[2];
 
         if (!isset($argv[3])) {
             $logger->error("Please input Log Id.");
-            exit;
         }
         $delLogId = $argv[3];
         break;
     default:
         $logger->error("Please only input view, add or del. \n");
-        exit;
 }
 
 $timeEntry = new Api\TimeEntry($client);
