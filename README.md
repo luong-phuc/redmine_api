@@ -20,17 +20,17 @@ View Time Log of Issues :
 php TimeLog.php view
 ```
 
-Add more Time Log for Issue 12345 :
+Add more Time Log for Issue {issue id} :
 
 ```
-php TimeLog.php add 12345
+php TimeLog.php add {issue id}
 ```
 
-Delete Time Log Id 12345 of Issue 54321 :
+Delete Time Log Id {log id} of Issue {issue id} :
 
 
 ```
-php TimeLog.php del 54321 12345
+php TimeLog.php del {issue id} {log id}
 ```
 
 ## How use API Issue:
