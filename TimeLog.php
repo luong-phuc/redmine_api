@@ -11,11 +11,6 @@ define('VIEW', 'view');
 define('ADD', 'add');
 define('DEL', 'del');
 
-$action = array(
-    VIEW => 1,
-    ADD => 2,
-    DEL => 3
-);
 $delLogId = null;
 $issueId = null;
 
@@ -26,36 +21,36 @@ if (isset($argv[1])) {
 } else {
     echo "What do you want ? \n";
     echo "1. input 'view' => View Log All. \n";
-    echo "2. input 'add' => Add more Log for issue. \n";
-    echo "3. input 'del' => Delete Log by id of Log. \n";
+    echo "2. input 'add {issue id}' => Add more Log for issue. \n";
+    echo "3. input 'del {issue id} {log id}' => Delete Log by id of Log. \n";
     exit;
 }
 
-switch($status) {
+switch ($status) {
     case VIEW:
         break;
     case ADD:
         if (!isset($argv[2])) {
-            echo "Please input Issue Id. \n";
+            $logger->error("Please input Issue Id.");
             exit;
         }
         $issueId = $argv[2];
         break;
     case DEL:
         if (!isset($argv[2])) {
-            echo "Please input Issue Id. \n";
+            $logger->error("Please input Issue Id.");
             exit;
         }
         $issueId = $argv[2];
 
-        if(!isset($argv[3])) {
-            echo "Please input Log Id. \n";
+        if (!isset($argv[3])) {
+            $logger->error("Please input Log Id.");
             exit;
         }
         $delLogId = $argv[3];
         break;
     default:
-        echo "Please only input view, add or del. \n";
+        $logger->error("Please only input view, add or del. \n");
         exit;
 }
 
@@ -65,9 +60,7 @@ if ($status == ADD && $issueId !== null) {
     echo "Add more log for {$issueId} . \n";
     $timeEntry->addMoreLogTime($issueId);
     echo "Add more log for today success. \n";
-
 }
-
 
 if ($status == DEL && $delLogId !== null) {
     echo "DELETE LOG ID : {$delLogId} . \n";

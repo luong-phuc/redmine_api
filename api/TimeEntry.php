@@ -1,4 +1,5 @@
 <?php
+
 namespace Api;
 
 class TimeEntry extends AbstractApi
@@ -18,7 +19,8 @@ class TimeEntry extends AbstractApi
         return array();
     }
 
-    public function addMoreLogTime($issueId, $hours = 8, $spentOn  = null, $activityId = 9, $projectId = 88, $comments = null) {
+    public function addMoreLogTime($issueId, $hours = 8, $spentOn  = null, $activityId = 9, $projectId = 88, $comments = null)
+    {
         $result = $this->client->time_entry->create([
             'issue_id' => $issueId,
             'project_id' => $projectId,
@@ -28,16 +30,17 @@ class TimeEntry extends AbstractApi
             'comments' => $comments,
         ]);
 
-        if($result === false) {
-            throw new \Exception("Can't create Log Time.");
+        if ($result === false) {
+            $this->logger->error("Can't create Log Time.");
         }
     }
 
-    public function remove($id) {
+    public function remove($id)
+    {
         $this->client->time_entry->remove($id);
     }
 
-    public static function viewDetail(Array $timeEntrie)
+    public static function viewDetail(array $timeEntrie)
     {
         $content = "id: {$timeEntrie['id']} ";
         $content .= "project: {$timeEntrie['project']['name']} ";
@@ -49,5 +52,4 @@ class TimeEntry extends AbstractApi
 
         echo $content;
     }
-
 }
