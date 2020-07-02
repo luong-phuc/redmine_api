@@ -1,15 +1,8 @@
 <?php
-
 namespace Api;
 
-class TimeEntry
+class TimeEntry extends AbstractApi
 {
-
-    public function __construct($client)
-    {
-        $this->client = $client;
-    }
-
     public function getAll($issueId, $userId, $limit = 5)
     {
         $timeEntries = $this->client->time_entry->all([
@@ -41,8 +34,7 @@ class TimeEntry
     }
 
     public function remove($id) {
-        $result = $this->client->time_entry->remove($id);
-        var_dump($result);
+        $this->client->time_entry->remove($id);
     }
 
     public static function viewDetail(Array $timeEntrie)

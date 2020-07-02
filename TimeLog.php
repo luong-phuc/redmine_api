@@ -1,8 +1,12 @@
 <?php
-include_once __DIR__ . '/autoload.php';
-$client = new Redmine\Client(REDMINE_HOST, USERNAME, PASSWORD, AUTH_KEY);
+require_once __DIR__ . '/autoload.php';
 
-/* ==================== USING API ==================== */
+/**
+ * View Time Log
+ * Add more Time Log
+ * Del Time Log Id
+ */
+
 define('VIEW', 'view');
 define('ADD', 'add');
 define('DEL', 'del');
@@ -53,16 +57,6 @@ switch($status) {
     default:
         echo "Please only input view, add or del. \n";
         exit;
-}
-
-
-
-
-
-$users = $client->user->getCurrentUser(['login' => LOGIN_USER]);
-if(isset($users['user'])) {
-    define('USER_ID', $users['user']['id']);
-    echo "Setting for User Login : {$users['user']['login']}  \n";
 }
 
 $timeEntry = new Api\TimeEntry($client);
