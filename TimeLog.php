@@ -12,7 +12,9 @@ define('ADD', 'add');
 define('DEL', 'del');
 
 $delLogId = null;
+$spendOn = null;
 $issueId = null;
+
 
 $status = '';
 if (isset($argv[1])) {
@@ -28,12 +30,19 @@ if (isset($argv[1])) {
 
 switch ($status) {
     case VIEW:
+        if (isset($argv[2])) {
+            $issueId = $argv[2];
+        }
         break;
     case ADD:
         if (!isset($argv[2])) {
             $logger->error("Please input Issue Id.");
         }
         $issueId = $argv[2];
+
+        if (isset($argv[3])) {
+            $spendOn = $argv[3];
+        }
         break;
     case DEL:
         if (!isset($argv[2])) {
@@ -53,17 +62,17 @@ switch ($status) {
 $timeEntry = new Api\TimeEntry($client);
 
 if ($status == ADD && $issueId !== null) {
-    echo "Add more log for {$issueId} . \n";
-    $timeEntry->addMoreLogTime($issueId);
-    echo "Add more log for today success. \n";
+    $logger->info("Add more log for {$issueId} . \n");
+    $timeEntry->addMoreLogTime($issueId, $spendOn);
+    $logger->info("Add more log for today success. \n");
 }
 
 if ($status == DEL && $delLogId !== null) {
-    echo "DELETE LOG ID : {$delLogId} . \n";
+    $logger->warning("DELETE LOG ID : {$delLogId} . \n");
     $timeEntry->remove($delLogId);
 }
 
-echo "List Log for issues: {$issueId} : \n";
+$logger->info("List Log for issues: {$issueId} : \n");
 $timeEntries = $timeEntry->getAll($issueId, USER_ID, 5);
 foreach ($timeEntries as $timeEntrie) {
     Api\TimeEntry::viewDetail($timeEntrie);

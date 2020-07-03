@@ -19,7 +19,7 @@ class TimeEntry extends AbstractApi
         return array();
     }
 
-    public function addMoreLogTime($issueId, $hours = 8, $spentOn  = null, $activityId = 9, $projectId = 88, $comments = null)
+    public function addMoreLogTime($issueId, $spentOn  = null, $hours = 8, $activityId = 9, $projectId = 88, $comments = null)
     {
         $result = $this->client->time_entry->create([
             'issue_id' => $issueId,
