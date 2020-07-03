@@ -26,6 +26,12 @@ Add more Time Log for Issue {issue id} :
 php TimeLog.php add {issue id}
 ```
 
+Add more Time Log for Issue {issue id} with spent_on:
+
+```
+php TimeLog.php add {issue id} {spent on}
+```
+
 Delete Time Log Id {log id} of Issue {issue id} :
 
 
