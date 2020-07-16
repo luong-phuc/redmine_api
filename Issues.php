@@ -49,3 +49,6 @@ if ($status === UPDATE_STATUS) {
     $issues->updateStatus($issueId, $valueUpdate, USER_ID);
     $issues->getInfo($issueId);
 }
+
+$view = sprintf('open %s/issues/%s', REDMINE_HOST, $issueId);
+system($view);
