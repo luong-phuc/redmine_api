@@ -50,5 +50,5 @@ if ($status === UPDATE_STATUS) {
     $issues->getInfo($issueId);
 }
 
-$view = sprintf('open %s/issues/%s', REDMINE_HOST, $issueId);
-system($view);
+$view = sprintf('Link: %s/issues/%s', REDMINE_HOST, $issueId);
+$logger->warning($view);
