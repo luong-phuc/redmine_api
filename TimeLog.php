@@ -13,6 +13,7 @@ define('DEL', 'del');
 
 $delLogId = null;
 $spendOn = null;
+$hours = 8;
 $issueId = null;
 
 
@@ -23,7 +24,7 @@ if (isset($argv[1])) {
 } else {
     echo "What do you want ? \n";
     echo "1. input 'view' => View Log All. \n";
-    echo "2. input 'add {issue id}' => Add more Log for issue. \n";
+    echo "2. input 'add {issue id} {spend on} {hours}' => Add more Log for issue. \n";
     echo "3. input 'del {issue id} {log id}' => Delete Log by id of Log. \n";
     exit;
 }
@@ -42,6 +43,10 @@ switch ($status) {
 
         if (isset($argv[3])) {
             $spendOn = $argv[3];
+        }
+
+        if (isset($argv[4])) {
+            $hours = $argv[4];
         }
         break;
     case DEL:
@@ -63,7 +68,7 @@ $timeEntry = new Api\TimeEntry($client);
 
 if ($status == ADD && $issueId !== null) {
     $logger->info("Add more log for {$issueId} . \n");
-    $timeEntry->addMoreLogTime($issueId, $spendOn);
+    $timeEntry->addMoreLogTime($issueId, $spendOn, $hours);
     $logger->info("Add more log for today success. \n");
 }
 
