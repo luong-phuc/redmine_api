@@ -48,6 +48,19 @@ class Issues extends AbstractApi
         echo $content;
     }
 
+    public function getStatus($issueId)
+    {
+        $issues = $this->client->issue->show($issueId);
+
+        if (isset($issues['issue'])) {
+            $issue = $issues['issue'];
+        } else {
+            $this->logger->error("We did not found issue {$issueId} .");
+        }
+
+        echo " {$issue['id']} : {$issue['status']['name']} ({$issue['status']['id']}) \n";
+    }
+
     public function updateStatus($issueId, $statusId, $userId)
     {
         if (!isset($this->statusInfo[$statusId])) {

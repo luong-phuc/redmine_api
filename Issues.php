@@ -3,8 +3,9 @@ require_once __DIR__ . '/autoload.php';
 
 define('VIEW', 'view');
 define('UPDATE_STATUS', 'update_status');
+define('CHECK_STATUS', 'check_status');
 
-$_statusList = array(VIEW, UPDATE_STATUS);
+$_statusList = array(VIEW, UPDATE_STATUS, CHECK_STATUS);
 
 $status = '';
 if (isset($argv[1]) && in_array($argv[1], $_statusList)) {
@@ -14,41 +15,52 @@ if (isset($argv[1]) && in_array($argv[1], $_statusList)) {
     echo "What do you want ? \n";
     echo "1. input 'view' => View info of issue id. \n";
     echo "2. input 'update_status {issue id} {status id}' => Update status for issue id. \n";
+    echo "3. input 'check_status {issue id list}' => Check status for issue id list. \n";
     exit;
 }
 
 
 $issueId = null;
 if (isset($argv[2])) {
-    $issueId = $argv[2];
+    $issueId = str_replace(' ', '', $argv[2]);
 } else {
     $logger->error("Please input issue id.");
 }
 
 $valueUpdate = null;
 if (isset($argv[3])) {
-    $valueUpdate = $argv[3];
-} elseif ($status !== VIEW) {
+    $valueUpdate = str_replace(' ', '', $argv[3]);
+} elseif ($status == UPDATE_STATUS) {
     $logger->error("Please input status id.");
 }
 
-$message = "\nYou're {$status} issue : {$issueId} ";
-$message .= ($status !== VIEW) ? "with content : {$valueUpdate} \n" : "\n";
-
-$logger->info($message);
-
 $issues = new Api\Issues($client);
-
 // View status list of issue
 $issues->getStatusListOfIssueId($issueId);
 
-// View information of issue
-$issues->getInfo($issueId);
+if ($status === VIEW) {
+    // View information of issue
+    $issues->getInfo($issueId);
+
+    $view = sprintf('Link: %s/issues/%s', REDMINE_HOST, $issueId);
+    $logger->warning($view);
+
+    return;
+}
 
 if ($status === UPDATE_STATUS) {
     $issues->updateStatus($issueId, $valueUpdate, USER_ID);
     $issues->getInfo($issueId);
+
+    $view = sprintf('Link: %s/issues/%s', REDMINE_HOST, $issueId);
+    $logger->warning($view);
+
+    return;
 }
 
-$view = sprintf('Link: %s/issues/%s', REDMINE_HOST, $issueId);
-$logger->warning($view);
+if ($status === CHECK_STATUS) {
+    $issueList = explode("\n", $issueId);
+    foreach($issueList as $id) {
+        $issues->getStatus($id);
+    }
+}
