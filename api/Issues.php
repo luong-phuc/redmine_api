@@ -55,7 +55,7 @@ class Issues extends AbstractApi
         if (isset($issues['issue'])) {
             $issue = $issues['issue'];
         } else {
-            $this->logger->error("We did not found issue {$issueId} .");
+            $this->logger->warning("We did not found issue {$issueId} .");
         }
 
         echo " {$issue['id']} : {$issue['status']['name']} ({$issue['status']['id']}) \n";

@@ -78,7 +78,7 @@ if ($status == DEL && $delLogId !== null) {
 }
 
 $logger->info("List Log for issues: {$issueId} : \n");
-$timeEntries = $timeEntry->getAll($issueId, USER_ID, 5);
+$timeEntries = $timeEntry->getAll($issueId, USER_ID, 20);
 foreach ($timeEntries as $timeEntrie) {
     Api\TimeEntry::viewDetail($timeEntrie);
 }
